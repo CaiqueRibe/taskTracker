@@ -8,10 +8,13 @@ import Footer from "./components/Footer"
 import Tasks from "./components/Tasks"
 import AddTask from "./components/AddTask"
 import About from "./components/About"
+import TaskDetails from "./components/TaskDetails"
 
 function App() {
    const [showAddTask, setShowAddTask] = useState(false)
    const [tasks, setTasks] = useState([])
+
+   // const user = "caique"
 
    useEffect(() => {
       const getTasks = async () => {
@@ -92,7 +95,6 @@ function App() {
             <Routes>
                <Route
                   path="/"
-                  exact
                   element={
                      <>
                         {showAddTask && <AddTask onAdd={addTask} />}
@@ -108,7 +110,9 @@ function App() {
                      </>
                   }
                />
+               {/* user === caique ? <About /> : 'redireciona para pagina de login' */}
                <Route path="/about" element={<About />} />
+               <Route path="/task/:id" element={<TaskDetails />} />
             </Routes>
             <Footer />
          </div>
