@@ -15,6 +15,10 @@ Date Created --> **18 de jan. de 2021**
 -  create-react-app
 -  json-server
 -  react-router-dom
+-  add task functionality that you can toggle on home page
+   -  no /create route
+-  reminder functionality thats attached to the task
+   -  changes the side color of the task when enabled
 
 ### Components
 
