@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react"
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import Header from "./components/Header"
 import Footer from "./components/Footer"
-
 import Tasks from "./components/Tasks"
 import AddTask from "./components/AddTask"
 import About from "./components/About"
 import TaskDetails from "./components/TaskDetails"
 
-function App() {
+export default function App() {
    const [showAddTask, setShowAddTask] = useState(false)
    const [tasks, setTasks] = useState([])
-
-   // const user = "caique"
 
    useEffect(() => {
       const getTasks = async () => {
@@ -24,14 +20,12 @@ function App() {
       getTasks()
    }, [])
 
-   //fetch tasks
    const fetchTasks = async () => {
       const res = await fetch(" http://localhost:5000/tasks")
       const data = await res.json()
       return data
    }
 
-   //fetch tasks- update
    const fetchTask = async (id) => {
       const res = await fetch(`http://localhost:5000/tasks/${id}`)
       const data = await res.json()
@@ -49,10 +43,6 @@ function App() {
 
       const data = await res.json()
       setTasks([...tasks, data])
-      // //creating a random id to insert
-      // const id = Math.floor(Math.random() * 10000) + 1
-      // const newTask = { id, ...task }
-      // setTasks([...tasks, newTask])
    }
 
    const deleteTask = async (id) => {
@@ -76,22 +66,13 @@ function App() {
 
       const data = await res.json()
 
-      setTasks(
-         tasks.map((task) =>
-            task.id === id ? { ...task, reminder: data.reminder } : task
-         )
-      )
+      setTasks(tasks.map((task) => (task.id === id ? { ...task, reminder: data.reminder } : task)))
    }
 
    return (
       <Router>
          <div className="container">
-            <Header
-               onAdd={() => setShowAddTask(!showAddTask)}
-               showAdd={showAddTask}
-            />
-
-            {/* <Header title="Props test Title" /> */}
+            <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
             <Routes>
                <Route
                   path="/"
@@ -99,18 +80,13 @@ function App() {
                      <>
                         {showAddTask && <AddTask onAdd={addTask} />}
                         {tasks.length > 0 ? (
-                           <Tasks
-                              tasks={tasks}
-                              onDelete={deleteTask}
-                              onToggle={toggleReminder}
-                           />
+                           <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
                         ) : (
                            <div>No tasks to show</div>
                         )}
                      </>
                   }
                />
-               {/* user === caique ? <About /> : 'redireciona para pagina de login' */}
                <Route path="/about" element={<About />} />
                <Route path="/task/:id" element={<TaskDetails />} />
             </Routes>
@@ -119,11 +95,3 @@ function App() {
       </Router>
    )
 }
-
-// class App extends React.Component {
-//    render() {
-//       return <h1>Test from Class</h1>
-//    }
-// }
-
-export default App
